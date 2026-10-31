@@ -9,5 +9,13 @@ df2 = pd.read_excel("dados.xlsx", sheet_name="Consumo de Produtos")
 # Filtrar categoria desejada
 df2 = df2[df2['T. Categoria'].isin(['DRINKS', 'SOFT DRINKS'])]
 
+# calcular total de pessoas atendidas por loja
+n_pessoas = df1.groupby('Estabelecimento')['N.Pessoas'].sum()
 
-print (df2)
+# calcular quantidades de produtos vendidos por loja e categoria
+quant = df2.groupby(['Estabelecimento', 'T. Categoria'])['Quant.'].sum()
+
+# calcular a quantidade de pedidos por cliente
+quant_p_pessoas = quant/n_pessoas
+
+print (quant_p_pessoas)
